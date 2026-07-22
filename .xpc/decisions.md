@@ -1,24 +1,24 @@
-# 架构决策与踩坑根因 (decisions.md)
+# Architecture Decisions & Pitfall Root Causes (decisions.md)
 
-> **信任级别：高（附证据的历史决策）。** 记录「为什么这么选」，只增不改。
-> 若某决策被后续推翻，不删旧 §，新增一个 § 记录新决策并注明「取代 §N」。
+> **Trust level: High (evidence-backed historical decisions).** Records "why we chose this"; append-only.
+> If a decision is later overturned, don't delete the old §; add a new § and note "supersedes §N".
 
-## 目录 (决策摘要)
-*每 § 一行结论摘要，扫目录即知是否需要阅读该节内容。*
+## Table of Contents (decision summaries)
+*One line per §; scan the ToC to decide whether to read that section.*
 
-- §1 [示例标题] - [结论摘要]
-- 
+- §1 [example title] - [conclusion summary]
+-
 
 ---
 
-## 决策详情
+## Decision Details
 
-### §1 [填写标题]
-- **最终方案**：[描述采用的方案]
-- **根因与证据**：[为什么采用此方案？附上实测数据或日志记录]
-- **否决的备选及原因**：[列出未采用的方案及其被否决的具体原因]
+### §1 [fill in title]
+- **Final approach**: [describe the adopted approach]
+- **Root cause & evidence**: [why this approach? attach measured data or logs]
+- **Rejected alternatives & why**: [list the alternatives not taken and the specific reasons]
 
-### §2 [填写标题]
-- **最终方案**：
-- **根因与证据**：
-- **否决的备选及原因**：
+### §2 [fill in title]
+- **Final approach**:
+- **Root cause & evidence**:
+- **Rejected alternatives & why**:

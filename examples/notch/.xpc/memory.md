@@ -1,45 +1,43 @@
-# 现状快照与最近会话 (memory.md)
+# Current-State Snapshot & Recent Sessions (memory.md)
 
-> **信任级别：低（易过期）。** 本文件是「方向线索」，不是「真相」。
-> 冷启动时用它快速定位「项目大概在做什么、下一步是什么」；
-> 但涉及具体代码、命令、状态前，**必须去源码 / 实际环境核对后再信**。
-> 若本文件与真实代码冲突，以代码为准，并在收尾时顺手更正本文件。
+> **Trust level: Low (goes stale).** This file is a *directional lead*, not the truth. On cold start, use it to
+> quickly locate "roughly what the project is doing and what's next"; before touching specific code/commands/state,
+> verify against source first. On conflict, the code wins — fix this file at wrap-up.
 
-> **维护纪律（尽力而为，不必完美）**：
-> 1. 每次会话结束前尽量更新 §0——它只是给下一轮对话的路标，不是交付物。
-> 2. §0 是**覆盖更新**的短快照，只写「当前状态 + 下一步」，不堆细节。
-> 3. 🚨 §0 红线：绝不在 §0 累积「每会话一句话」流水，永远只有下面 4 条 bullet。想记「这次做了什么」→ 写 §0A。
-> 4. §0A 保持滚动窗口 ≤ 3 个会话；写第 4 个时，把最老的整段迁移到 `history.md`。
-> 5. 单一真相源：项目身份 → `manifest.md`，踩坑/铁律 → `rules.md`，决策 → `decisions.md`。
+> **Maintenance discipline**:
+> 1. §0 is an **overwrite** short snapshot. 🚨 **Red line: never accumulate a per-session changelog in §0; only the 4 bullets below.**
+> 2. Keep §0A a rolling window of ≤ 3 sessions; when writing the 4th, migrate the oldest wholesale to `history.md`.
+> 3. Single source of truth: identity → `manifest.md`, pitfalls/iron-rules → `rules.md`, decisions → `decisions.md`. This file only answers "where are we now".
 
 ---
 
-## §0 当前状态 (覆盖更新)
-- **项目状态**：MVP 可用。`add` / `log` / `sync` 已稳定，`watch` 刚接入防抖批量提交。
-- **最新进展**：把 `watch` 的每次改动即时 commit 改成 800ms 防抖批量 commit，避免高频速记刷出一堆碎 commit（见 §0A）。
-- **待办/下一步**：为 `sync` 加冲突时的友好提示（当前 rebase 冲突只抛原始 git 错误）；补 Windows rename 重试的 vitest 用例。
-- **已知问题**：`watch` 在 WSL `/mnt/c` 下仍偶发漏事件（R7 polling 已缓解但未根治）；`sync` 冲突信息对用户不友好。
+## §0 Current State (overwrite)
+> Only the 4 bullets below; overwrite, never accumulate a history log.
+- **Project status**: MVP works. `add` / `log` / `sync` are stable; `watch` just gained debounced batch commits.
+- **Latest progress**: changed `watch` from commit-per-change to an 800ms debounced batch commit, to avoid a flurry of tiny commits from rapid notes (see §0A).
+- **Todo / next step**: friendly conflict message for `sync` (currently a rebase conflict just throws the raw git error); add vitest cases for the Windows rename retry.
+- **Known issues**: `watch` still occasionally misses events under WSL `/mnt/c` (R7 polling mitigates but doesn't fully fix); `sync` conflict output is unfriendly to users.
 
 ---
 
-## §0A 最近会话详记 (滚动窗口 ≤ 3)
-*每个会话用 `###` 分隔，使用多行短 bullet 记录关键过程和结论。*
+## §0A Recent Session Details (rolling window ≤ 3)
+*Separate each session with `###`; use multi-line short bullets.*
 
-### 会话 2026-05-06 10:20 - watch 改防抖批量提交
-- 现象：`watch` 下连记 5 条 → git log 出现 5 个碎 commit，`log` 难读。
-- 改法：`watch.ts` 收集变更事件、800ms 无新事件才触发一次 `sync`（常量 `WATCH_DEBOUNCE_MS`）。
-- 复用 sync.ts 的串行锁（R3），防抖窗口结束时若上一次 sync 未完则顺延。
-- 验证：`npm test` 通过；手动连记 5 条 → 1 个 commit。
+### Session 2026-05-06 10:20 - watch → debounced batch commit
+- Symptom: under `watch`, jotting 5 notes in a row → 5 tiny commits in git log, `log` hard to read.
+- Fix: `watch.ts` collects change events, triggers one `sync` only after 800ms of no new events (const `WATCH_DEBOUNCE_MS`).
+- Reuses sync.ts's serialization lock (R3); if the previous sync hasn't finished when the debounce window ends, it queues.
+- Verify: `npm test` passes; manually jotting 5 in a row → 1 commit.
 
-### 会话 2026-05-03 16:40 - pull 改 --rebase，修历史污染
-- 现象：两台机来回 sync 后 `notch log` 满屏 merge commit。
-- 根因：`simple-git` 默认 `pull` 走 merge。→ 立 R8 + decisions §? 不需要（属既有决策 §1 同步策略延伸），记 rules 死胡同一条。
-- 改 `sync.ts` 的 pull 为 `--rebase`；冲突则中止并提示（提示文案仍粗糙，见 §0 待办）。
+### Session 2026-05-03 16:40 - pull → --rebase, fix history pollution
+- Symptom: after back-and-forth sync on two machines, `notch log` was full of merge commits.
+- Root cause: `simple-git`'s default `pull` merges. → set R8 (extends existing decision §1's sync strategy, no new §), recorded a dead end in rules.
+- Changed `sync.ts` pull to `--rebase`; on conflict, abort and prompt (message still rough, see §0 todo).
 
 ---
 
-## 参考指针（本文件不重复维护以下内容）
-- 项目身份 / 技术栈 / 项目结构 / 常用命令 → `manifest.md`（高可信）
-- 硬规则与死胡同 → `rules.md`（高可信，历史事实）
-- 决策根因 → `decisions.md`（高可信，附证据）
-- 历史会话归档 → `history.md`
+## Pointers (this file does not duplicate the following)
+- Project identity / stack / structure / commands → `manifest.md` (high trust)
+- Hard rules & dead ends → `rules.md` (high trust, historical fact)
+- Decision root causes → `decisions.md` (high trust, with evidence)
+- Archived sessions → `history.md`

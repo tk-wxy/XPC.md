@@ -1,23 +1,21 @@
 # notch
 
-> 跨平台命令行速记工具——一条命令把带时间戳的想法追加进本地 git 仓库，`watch` 模式自动同步。
+> A cross-platform CLI quick-note tool: one command appends a timestamped thought to a local git repo; `watch` mode auto-syncs.
 
-**本文件只是引路。所有开发流程、协议与规范的唯一标准是 `.xpc/workflow.md`，必须严格遵循。**
+**This file just routes. The single source of truth for all dev flow, protocol, and conventions is `.xpc/workflow.md` — follow it strictly.**
 
----
+## Startup Protocol
 
-## 启动协议
+- **First contact (cold start)**: run `.xpc/workflow.md` §0 (Cold-start protocol)
+- **Already know the project**: run `.xpc/workflow.md` §1 (Session-start protocol)
 
-- **首次接触本项目（冷启动）**：执行 `.xpc/workflow.md` 〈零、冷启动协议〉
-- **已了解项目**：执行 `.xpc/workflow.md` 〈一、会话开始协议〉
+## Task End (highest priority)
 
-## 任务结束（最高优先级）
+**Before outputting any summary to the user, first run `.xpc/workflow.md` §4 (Task-end protocol).**
+Trigger: task done, session end, or the user says "wrap up". Prioritize recording this session's pitfalls & decisions (non-rotting high-value knowledge); update the current-state snapshot best-effort.
 
-**在向用户输出总结之前，必须先执行 `.xpc/workflow.md` 〈四、任务结束协议〉。**
-触发条件：任务完成、会话结束、或用户说「收尾」。优先记下这次的踩坑与决策（不会过期的高价值知识），现状快照尽力更新即可。
+## Core Principles (full version in workflow.md §5)
 
-## 核心原则（详版见 workflow.md 第五节）
-
-- 诊断优先于修改；不确定就问，不要假设
-- 高危区（`store.ts` 原子写 / `sync.ts` git 并发 / `paths.ts` 跨平台路径）一次只改一个变量
-- 所有行为必须与 `.xpc/manifest.md` 对齐
+- Diagnose before modifying; if unsure, ask, don't assume
+- High-risk zones (`store.ts` atomic write / `sync.ts` git concurrency / `paths.ts` cross-platform paths): one variable at a time
+- All behavior must align with `.xpc/manifest.md`

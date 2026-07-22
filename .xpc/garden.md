@@ -1,53 +1,56 @@
-# 园丁整理提示词 (garden.md)
+# Gardening Prompt (garden.md)
 
-> **这是用户手动触发的维护任务，不在冷启动/常规会话读取范围内。**
-> 知识库会随开发慢慢变脏、过期、臃肿——这是正常的。与其指望每次会话都维护完美，
-> 不如让用户每隔一段时间（例如每 1~2 周，或感觉 `.xpc/` 开始乱时）触发一次集中修剪。
+> **This is a user-triggered maintenance task, not part of the cold-start / normal-session reading path.**
+> The knowledge base gets messy, stale, and bloated as development proceeds — that's normal. Rather than hoping
+> every session maintains it perfectly, let the user trigger a focused cleanup every so often (e.g. every 1–2
+> weeks, or when `.xpc/` starts to feel messy).
 >
-> **用法**：把下面「发给 Agent 的提示词」整段发给任意 AI agent 即可。
+> **Usage**: send the whole "Prompt to the Agent" block below to any AI agent.
 
 ---
 
-## 发给 Agent 的提示词（复制以下全部内容）
+## Prompt to the Agent (copy everything below)
 
 ---
 
-请对本项目执行一次 **XPC 知识库园丁整理**。
+Please run an **XPC knowledge-base gardening pass** on this project.
 
-**重要边界：本次任务你只当「图书管理员 / 园丁」，不写任何业务代码、不改任何功能。**
-你的唯一职责是让 `.xpc/` 下的知识库重新变得**准确、精简、可信**。全程只读源码用于核对，不修改源码。
+**Important boundary: for this task you are only a "librarian / gardener" — write no business code, change no
+features.** Your sole job is to make `.xpc/` **accurate, lean, and trustworthy** again. Read source only to
+cross-check; do not modify source.
 
-### 整理清单（逐项执行，最后汇总报告给我）
+### Checklist (do each item, then report back to me)
 
-**1. 现状漂移校验（memory.md §0）**
-- 逐条抽查 `§0` 里的断言（项目状态、最新进展、待办、已知问题）
-- 去真实代码 / git log 核对是否还成立
-- 列出所有「文档说的 ≠ 代码现状」的漂移点，给出建议改法
+**1. Current-state drift check (memory.md §0)**
+- Spot-check each assertion in `§0` (status, latest progress, todos, known issues).
+- Cross-check against the real code / git log to see if it still holds.
+- List every "doc says ≠ code reality" drift, with a suggested fix.
 
-**2. 踩坑/死胡同复审（rules.md）**
-- 检查每条铁律、死胡同是否仍然成立（技术栈/依赖是否已升级导致失效）
-- 失效的**不要删**，用删除线标注：`~~原文~~ (已失效 YYYY-MM，因为……)`
-- 检查顶部索引区是否与正文一致；不一致则修正
-- 若发现同一类坑重复记录，合并去重
+**2. Pitfall / dead-end review (rules.md)**
+- Check whether each iron rule / dead end still holds (has a stack/dependency upgrade invalidated it?).
+- Invalidated ones: **do not delete** — mark with strikethrough: `~~original~~ (invalidated YYYY-MM, because …)`.
+- Check the top index matches the body; fix if not.
+- Merge duplicates if the same kind of pit is recorded more than once.
 
-**3. 决策一致性（decisions.md）**
-- 检查是否有决策已被后续开发推翻但未标注
-- 被取代的旧 § 保留，在新 § 注明「取代 §N」
-- 核对目录摘要与正文是否对得上
+**3. Decision consistency (decisions.md)**
+- Check for decisions already overturned by later development but not marked.
+- Keep the superseded old §; note "supersedes §N" in the new §.
+- Verify the ToC summaries match the bodies.
 
-**4. 老化迁移（memory.md §0A → history.md）**
-- `§0A` 滚动窗口若超过 3 个会话，把最老的整段迁移到 `history.md`，不留副本
+**4. Age-out migration (memory.md §0A → history.md)**
+- If `§0A` exceeds 3 sessions, migrate the oldest one wholesale to `history.md`, no copy left behind.
 
-**5. 臃肿瘦身**
-- 找出过时、重复、或对当前开发已无参考价值的内容，标出建议删除/归档项
-- 检查是否违反单一真相源（同一事实散落多处），指出应收敛到哪个文件
+**5. Slim down the bloat**
+- Find outdated, duplicate, or no-longer-relevant content; flag deletions/archival suggestions.
+- Check for single-source-of-truth violations (same fact scattered in multiple places); say where it should converge.
 
-**6. manifest 稳定性检查**
-- `manifest.md` 是宪法，本不该常改；但若架构已发生根本性变化而 manifest 没跟上，**只指出、不擅改**，等我确认
+**6. Manifest stability check**
+- `manifest.md` is the constitution and shouldn't change often; but if the architecture has fundamentally changed
+  and the manifest hasn't kept up, **only point it out — don't edit unilaterally** — and wait for my confirmation.
 
-### 输出要求
+### Output requirements
 
-- **先给我一份「整理报告」**：分上述 6 类，逐条列出「发现的问题 + 建议动作」，用短 bullet
-- 明确区分：哪些是你可以直接安全修的（如索引区对齐、老化迁移、删除线标注），哪些需要我拍板（如删除内容、改 manifest）
-- **等我确认后再动手改文件**；能直接安全修的可先修并在报告里说明
-- 不确定的一律列出来问我，不要替我做决定
+- **Give me a "gardening report" first**: grouped by the 6 categories above, list "problem found + suggested action" as short bullets.
+- Clearly separate: what you can safely fix directly (index sync, age-out migration, strikethrough marking) vs. what needs my call (deleting content, editing the manifest).
+- **Wait for my confirmation before editing files**; you may pre-apply the safe fixes and note them in the report.
+- List anything you're unsure about and ask me; don't decide for me.

@@ -1,49 +1,61 @@
-# 初始化协议 (init.md) — 一次性
+# Initialization Protocol (init.md) — one-time
 
-> **这是一次性的初始化协议。** 由入口文件在「项目尚未初始化 + 用户要求初始化」时触发。
-> 目的：把这套**通用的 XPC 骨架**烘焙成**本项目专属**的知识库。
-> 初始化 = 把通用骨架消化成「本项目 AI 舒适的结构」——消耗掉一次性脚手架，留下几个各司其职的 md + 持久约束。
-> **完成后本文件可删除**（见〈四、收尾〉）。
+> **This is a one-time initialization protocol.** Triggered by the entry file when the project is
+> not yet initialized AND the user asks to initialize.
+> Purpose: bake this **generic XPC skeleton** into a **project-specific** knowledge base.
+> Initialization = digest the generic skeleton into "a structure comfortable for the AI" — consume the
+> one-off scaffolding, keep a few role-specific md files + durable constraints.
+> **This file may be deleted afterward** (see §4).
+
+> 🌐 **Work in the user's language.** Conduct the initialization dialogue **in the language the user speaks**,
+> and bake the knowledge base (manifest / memory / rules / …) in **that same language**. The template ships in
+> English as the canonical source, but the project you produce should match the user's language.
 
 ---
 
-## 触发方式
+## Trigger
 
-用户在新 clone 的项目里说类似「**我的项目需求是……，请初始化**」。你（AI）从入口文件的〈初始化引导〉读到指针后，执行本协议。
+In a freshly cloned project, the user says something like "**My project is …, please initialize**". You (the AI),
+having read the entry file's *Initialization Bootstrap* pointer, run this protocol.
 
-## 一、先搞清楚项目（缺什么就问，别假设）
+## 1. Understand the project (ask when unsure; don't assume)
 
-从用户的需求描述里提取能提取的：**项目名称、一句话定位、核心目标**。
-然后**主动补齐关键信息**——以下缺失项必须问用户，不要替他假设：
+Extract what you can from the user's description: **project name, one-line positioning, core goals.**
+Then **actively fill the gaps** — the following must be asked, not assumed:
 
-- **技术栈 / 平台**（语言、框架、运行环境）——地基，选错全歪。
-- **最高危区**（改动最容易连锁出 bug 的部分）——没有就写「暂无，踩到再补」。
-- **非目标**（明确不做的事）——可选。
+- **Tech stack / platform** (language, framework, runtime) — the foundation; wrong choice, everything skews.
+- **Highest-risk zone** (the part where a change most easily cascades into bugs) — if none, write "none yet, add on first hit".
+- **Non-goals** (things explicitly out of scope) — optional.
 
-同时判断项目类型：
+Also determine the project type:
 
-- **全新项目（greenfield）**：目录里基本没有代码 → 从「需求 + 与用户确认的技术栈」**规划** manifest；项目结构/命令写成「规划，随开发落地」。
-- **已有项目**：目录里有代码 → **先扫描代码**（结构、核心模块、构建/测试命令、明显高危区）再烘焙 manifest；能从代码里看出的实证坑（`HACK`/`FIXME`/平台约束/非常规配置）可作为 rules 的**第一颗种子**（须标注证据来源）。
+- **Greenfield**: the directory has essentially no code → **plan** the manifest from "requirement + the stack you
+  confirmed with the user"; write project structure/commands as "planned, to land as development proceeds".
+- **Existing project**: the directory has code → **scan the code first** (structure, core modules, build/test
+  commands, obvious high-risk zones), then bake the manifest; evidence-based pitfalls visible in the code
+  (`HACK`/`FIXME`/platform constraints/unusual config) may be the **first seed** in rules (cite the evidence).
 
-## 二、烘焙知识库
+## 2. Bake the knowledge base
 
-1. **`.xpc/manifest.md`（项目宪法，最重要）**：填入使命、技术栈、架构不变量、高危区、项目结构、常用命令。
-2. **入口文件**（CLAUDE.md / AGENTS.md / 你所在平台的入口）：把所有 `{{占位符}}` 替换为真实项目信息；可按你自己的特点优化措辞。
-3. **`.xpc/memory.md`**：§0 写当前状态快照（**只 4 条 bullet**，遵守红线）；§0A 记本次初始化会话。
-4. **`.xpc/rules.md` / `.xpc/decisions.md`**：保持空骨架；只有找到**实证**才播第一颗种子，**绝不编造**——宁可空骨架，不要假经验。
+1. **`.xpc/manifest.md` (project constitution, most important)**: fill in mission, stack, architecture invariants, high-risk zones, project structure, common commands.
+2. **Entry files** (CLAUDE.md / AGENTS.md / your platform's entry): replace all `{{placeholders}}` with real project info; you may tune the wording to your own strengths.
+3. **`.xpc/memory.md`**: write the current-state snapshot in §0 (**4 bullets only**, obey the red line); record this init session in §0A.
+4. **`.xpc/rules.md` / `.xpc/decisions.md`**: keep as empty skeletons; seed the first entry **only** if you find real evidence — **never fabricate**. Better an empty skeleton than fake experience.
 
-## 三、复述确认（必做）
+## 3. Recite for confirmation (required)
 
-向用户复述 `manifest.md` 的核心结论（**使命 / 架构不变量 / 高危区 / 技术栈**），获得明确确认。若有偏差，改完重新复述。**确认前不要进入开发。**
+Recite the core conclusions of `manifest.md` back to the user (**mission / architecture invariants / high-risk
+zones / stack**) and get explicit confirmation. If there's a discrepancy, fix and re-recite. **Do not start
+development before confirmation.**
 
-## 四、收尾（体现「一次性」）
+## 4. Wrap-up (embodying "one-time")
 
-确认通过后：
+After confirmation:
 
-- ✅ **可删除本文件 `.xpc/init.md`**——初始化是一次性的，用完即弃。
-- ✅ **可删除各文件里纯脚手架性质的填充说明**（如「(提示：以上为骨架……)」「[填写]」「[一句话摘要]」这类占位注释）——它们已完成使命。
-- ✅ **可删除框架自带的 `README.md` 与 `examples/`（若存在）**——那是框架仓库的说明与示例，不是你的项目内容。
-- 🚫 **绝不删改**：`workflow.md` 的开发/收尾协议、各文件顶部的**信任级别**与**维护纪律**、`memory.md` 的 **§0 红线**——这些是框架**每次会话都要用**的持久约束，不是一次性脚手架。
+- ✅ **You may delete this file `.xpc/init.md`** — initialization is one-time; discard when done.
+- ✅ **You may delete the pure-scaffolding fill-in notes** in each file (e.g. "(hint: this is a skeleton…)", "[fill in]", "[one-line summary]" placeholders) — they've served their purpose.
+- ✅ **You may delete the framework's bundled `README.md` / `README.zh-CN.md` / `examples/`** (if present) — those are the framework repo's docs and demos, not your project's content.
+- 🚫 **Never delete or alter**: the dev/wrap-up protocol in `workflow.md`, the **trust levels** and **maintenance discipline** headers at the top of each file, the **§0 red line** in `memory.md` — these are durable constraints used **every session**, not one-time scaffolding.
 
-> 一句话：**该消耗的（init 协议、填充占位、骨架提示）用完即弃；该常驻的（角色分工、协议、约束）一字不动。**
-> 最终形态 = 几个各司其职的 md（manifest 身份 / rules 踩坑 / decisions 决策 / memory 现状 / history 归档）+ workflow 协议 + 信任与维护约束。
+> In short: **consume what's meant to be consumed (the init protocol, fill-in placeholders, skeleton hints, README/examples); leave what's meant to persist (roles, protocol, constraints) untouched.**
+> Final form = a few role-specific md files (manifest = identity / rules = pitfalls / decisions = decisions / memory = current state / history = archive) + the workflow protocol + trust & maintenance constraints.

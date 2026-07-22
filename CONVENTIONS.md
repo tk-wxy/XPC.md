@@ -1,26 +1,25 @@
-# {{PROJECT_NAME}} — Aider 入口
+# {{PROJECT_NAME}} — Aider conventions
 
 > {{PROJECT_DESCRIPTION}}
-> 可在 `.aider.conf.yml` 中配置自动读取本文件。
 
-**本文件只是引路。所有开发流程、协议与规范的唯一标准是 `.xpc/workflow.md`，必须严格遵循。**
+**This file just routes. The single source of truth for all dev flow, protocol, and conventions is `.xpc/workflow.md` — follow it strictly.**
 
-## 初始化引导（仅未初始化时）
+## Initialization Bootstrap (only when not yet initialized)
 
-若本项目**尚未初始化**（`.xpc/manifest.md` 仍含 `{{占位符}}` 或仍是模板）、且用户要求初始化（如「请初始化」）→ 执行 `.xpc/init.md` 的初始化协议；已初始化则忽略本节。
+If this project is not yet initialized (`.xpc/manifest.md` still contains `{{placeholders}}` or is still a template) and the user asks to initialize (e.g. "please initialize") → run the initialization protocol in `.xpc/init.md`; otherwise ignore this section.
 
-## 启动协议
+## Startup Protocol
 
-- **首次接触本项目（冷启动）**：执行 `.xpc/workflow.md` 〈零、冷启动协议〉
-- **已了解项目**：执行 `.xpc/workflow.md` 〈一、会话开始协议〉
+- **First contact (cold start)**: run `.xpc/workflow.md` §0 (Cold-start protocol)
+- **Already know the project**: run `.xpc/workflow.md` §1 (Session-start protocol)
 
-## 任务结束（最高优先级）
+## Task End (highest priority)
 
-**在向用户输出总结之前，必须先执行 `.xpc/workflow.md` 〈四、任务结束协议〉。**
-触发条件：任务完成、会话结束、或用户说「收尾」。优先记下这次的踩坑与决策（不会过期的高价值知识），现状快照尽力更新即可。
+**Before outputting any summary to the user, first run `.xpc/workflow.md` §4 (Task-end protocol).**
+Trigger: task done, session end, or the user says "wrap up". Prioritize recording this session's pitfalls & decisions (non-rotting high-value knowledge); update the current-state snapshot best-effort.
 
-## 核心原则（详版见 workflow.md 第五节）
+## Core Principles (full version in workflow.md §5)
 
-- 诊断优先于修改；不确定就问，不要假设
-- 高危区一次只改一个变量；多次修同一处仍失败 = 死胡同信号，果断回退
-- 所有行为必须与 `.xpc/manifest.md` 对齐
+- Diagnose before modifying; if unsure, ask, don't assume
+- One variable at a time in high-risk zones; repeated failure at the same spot = dead-end signal, roll back
+- All behavior must align with `.xpc/manifest.md`

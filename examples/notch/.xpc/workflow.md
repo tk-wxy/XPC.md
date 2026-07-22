@@ -1,163 +1,163 @@
-# Phase 2 开发过程提示词 (workflow.md)
+# Phase 2 Development Protocol (workflow.md)
 
-> **系统指令**：这是本项目的 Agent 开发完整生命周期核心工作流。
-> 本框架**首要目的是给你参考、次要目的才是约束**——把这里的知识当「高质量线索」用，
-> 帮你少踩坑、干活更靠谱，而不是当成必须机械执行的仪式。
-
----
-
-## 信任级别（读任何知识文件前先建立的姿态）
-
-不同文件的可信度不同，别一视同仁地全盘照信：
-
-| 文件 | 内容 | 信任级别 | 使用姿态 |
-|------|------|---------|---------|
-| `manifest.md` | 项目使命 / 架构不变量 / 高危区 | **高**（初始化时人工确认过） | 行为锚点，对齐它 |
-| `rules.md` | 踩坑 / 死胡同 / 铁律 | **高**（发生过就为真） | 动手前优先查，避免重复踩坑 |
-| `decisions.md` | 决策根因 + 证据 | **高** | 需要根因时查 |
-| `memory.md §0` | 当前状态快照 | **低（易过期）** | 只作方向线索，涉及具体代码/命令**先核对源码再信** |
-| `history.md` | 归档会话 | — | 考古用，默认不读 |
-
-> **冲突时以真实代码 / 实际运行结果为准**，并在收尾时顺手更正过期的现状记录。
+> **System directive**: this is the core, full-lifecycle development workflow for this project.
+> This framework is **reference-first, constraint-second** — treat the knowledge here as high-quality
+> *leads* that help you avoid pitfalls and work more reliably, not as ceremony to execute mechanically.
 
 ---
 
-## 零、冷启动协议（首次接触本项目时执行）
+## Trust levels (the stance to take before reading any knowledge file)
 
-> 适用场景：新 agent 首次会话、切换模型后首次会话、长时间中断后重新接入。
+Files differ in reliability — don't trust them all equally:
 
-**判断条件**：如果你对本项目没有任何上下文记忆，执行以下冷启动：
+| File | Content | Trust level | How to use |
+|------|---------|-------------|-----------|
+| `manifest.md` | Mission / architecture invariants / high-risk zones | **High** (human-confirmed at init) | Behavioral anchor; align to it |
+| `rules.md` | Pitfalls / dead ends / iron rules | **High** (it happened, so it's true) | Check first before acting, to avoid re-stepping |
+| `decisions.md` | Decision root causes + evidence | **High** | Consult when you need the "why" |
+| `memory.md §0` | Current-state snapshot | **Low (goes stale)** | A directional lead only; **verify against source before trusting** specific code/commands |
+| `history.md` | Archived sessions | — | Forensics only; not read by default |
 
-1. **读身份**：`.xpc/manifest.md`（项目使命、技术栈、架构不变量、高危区）
-   - 这是不可变的项目宪法，你的所有行为必须与它对齐
-2. **读现状**：`.xpc/memory.md` 全文（§0 当前状态 + §0A 最近会话）
-   - 快速掌握项目当前进度、待办事项、最近发生了什么
-3. **扫铁律索引**：`.xpc/rules.md` 顶部索引区 + 死胡同列表
-   - 索引区标注为高危的分节必须读全文，其余分节按需再读
-4. **扫决策目录**：`.xpc/decisions.md` 的顶部目录区
-   - 仅扫目录，了解有哪些历史决策，不需要全文阅读
-5. **读流程**：本文件（workflow.md）全文
-   - 之后的会话只需按需重读相关章节
-
-完成冷启动后，你应该能回答：
-- 这个项目是做什么的？当前处于什么阶段？
-- 有哪些不能触碰的硬约束？
-- 下一步应该做什么？
+> **On conflict, the real code / actual run result wins.** Fix stale current-state records at wrap-up.
 
 ---
 
-## 一、会话开始协议（渐进式读取）
+## 0. Cold-start protocol (run on first contact with this project)
 
-> 适用场景：已经了解项目的 agent 开始新会话或接到新任务。
+> Applies to: a new agent's first session, first session after switching models, or re-entry after a long gap.
 
-1. **必读**：`.xpc/memory.md` 中的 `§0`（当前状态快照），确认项目最新进度
-2. **相关时读**：通过 `.xpc/rules.md` 索引区定位与当前任务模块相关的分节，只读那些分节
-3. **需要根因时**：扫描 `.xpc/decisions.md` 的目录区，找到相关 `§` 后只读那一节
-4. **考古用**：`.xpc/history.md` 默认不读取，仅需追溯时使用 grep 搜索
+**Trigger**: if you have no context/memory of this project, run the cold start:
 
----
+1. **Read identity**: `.xpc/manifest.md` (mission, stack, architecture invariants, high-risk zones)
+   - This is the immutable project constitution; all your actions must align with it.
+2. **Read current state**: `.xpc/memory.md` in full (§0 current state + §0A recent sessions)
+   - Quickly grasp progress, todos, and what happened recently.
+3. **Scan iron-rule index**: the index table at the top of `.xpc/rules.md` + the dead-ends list
+   - Sections flagged high-risk in the index must be read in full; others on demand.
+4. **Scan decisions ToC**: the table of contents at the top of `.xpc/decisions.md`
+   - Only scan the ToC to know which decisions exist; no need to read them all.
+5. **Read the workflow**: this file (workflow.md) in full
+   - Later sessions only re-read the relevant sections on demand.
 
-## 二、任务执行流程
-
-1. **理解需求**
-   - 完整理解用户意图，不确定就问，绝对不要假设
-   - 确认任务边界和验收标准
-
-2. **影响分析**
-   - 哪些模块会受此次变更影响？
-   - 有什么潜在风险？
-   - 是否涉及高危区（见 `manifest.md`）？涉及则提高警戒级别
-
-3. **方案检查**
-   - 动手前先查阅 `.xpc/rules.md` 中的死胡同列表
-   - 避免走已验证失败的技术路线
-   - 检查 `.xpc/decisions.md` 中是否有相关的历史决策
-
-4. **实施编码**
-   - 在高危区修改时，**一次只改一个变量**
-   - 诊断优先于修改，查明原因再动手
-   - 所有可调参数必须提取为命名常量
-   - **已验证的笨方法优于未验证的聪明方法**
-   - 保持与 `manifest.md` 中锁定的技术栈和架构不变量一致
-
-5. **自验证**
-   - 代码修改完成后，自己运行验证（测试、编译或执行）
-   - 若某条链路因环境限制无法跑通，必须诚实标注「未验证」
-
-6. **死胡同识别**
-   - 如果多次修改同一处代码仍失败，这是**死胡同信号**
-   - 果断回退，重新评估方案，不要在此处无限死磕
+After cold start you should be able to answer:
+- What is this project? What stage is it at?
+- What hard constraints must not be touched?
+- What should be done next?
 
 ---
 
-## 三、专项场景
+## 1. Session-start protocol (progressive reading)
 
-### 1. 新功能开发
-- 动手前先与用户确认功能边界和验收标准
-- 评估该功能对现有架构的影响，确认不违反 `manifest.md` 中的架构不变量
-- 采用小步迭代，确保每一步都是可验证的
+> Applies to: an agent that already knows the project starting a new session or task.
 
-### 2. Bug 修复 / Debug
-- 流程：复现问题 → 定位根因 → 实施最小修复 → 验证修复
-- 始终先假设最简单的原因，排除基础错误
-- 修复完成后，检查是否需要将此坑转化为 `rules.md` 中的新增铁律或死胡同
-
-### 3. 代码审查
-- 对照 `rules.md` 逐条检查代码合规性
-- 重点关注高危区变更
-- 检查变更是否引入了未文档化的新耦合或约束
-
-### 4. 重构
-- 重构前先确保有足够的测试覆盖
-- **重构和功能变更绝不能混在一起**，分开提交和验证
-- 每完成一步重构，都必须验证系统行为未发生改变
-- 重构不得违反 `manifest.md` 中的架构不变量
+1. **Must read**: `§0` in `.xpc/memory.md` (current-state snapshot), to confirm the latest progress.
+2. **Read when relevant**: use the `.xpc/rules.md` index to locate sections tied to the current task's module; read only those.
+3. **When you need root cause**: scan the ToC of `.xpc/decisions.md`, find the relevant `§`, read only that one.
+4. **Forensics**: `.xpc/history.md` is not read by default; grep it only when tracing history.
 
 ---
 
-## 四、任务结束协议（收尾时更新知识库）
+## 2. Task execution flow
 
-> **触发条件（满足任一即执行）**：任务完成、会话即将结束、或用户说「收尾」。
+1. **Understand the requirement**
+   - Fully grasp user intent; if unsure, ask — never assume.
+   - Confirm task boundaries and acceptance criteria.
+
+2. **Impact analysis**
+   - Which modules are affected by this change?
+   - What are the potential risks?
+   - Does it touch a high-risk zone (see `manifest.md`)? If so, raise your alert level.
+
+3. **Plan check**
+   - Before acting, consult the dead-ends list in `.xpc/rules.md`.
+   - Avoid technical routes already proven to fail.
+   - Check `.xpc/decisions.md` for relevant past decisions.
+
+4. **Implement**
+   - In a high-risk zone, **change one variable at a time**.
+   - Diagnose before modifying; find the cause before you act.
+   - Extract every tunable parameter into a named constant.
+   - **A verified dumb approach beats an unverified clever one.**
+   - Stay consistent with the stack and architecture invariants locked in `manifest.md`.
+
+5. **Self-verify**
+   - After changes, run verification yourself (test, compile, or execute).
+   - If a path can't be run due to environment limits, honestly label it "unverified".
+
+6. **Dead-end detection**
+   - If repeated edits to the same spot keep failing, that's a **dead-end signal**.
+   - Roll back decisively and re-evaluate; don't grind endlessly.
+
+---
+
+## 3. Special scenarios
+
+### 1. New feature
+- Confirm scope and acceptance criteria with the user before starting.
+- Assess impact on existing architecture; confirm it doesn't violate the invariants in `manifest.md`.
+- Iterate in small, individually verifiable steps.
+
+### 2. Bug fix / debug
+- Flow: reproduce → locate root cause → apply minimal fix → verify.
+- Always assume the simplest cause first; rule out the basics.
+- After fixing, consider whether this pit should become a new iron rule / dead end in `rules.md`.
+
+### 3. Code review
+- Check compliance against `rules.md`, item by item.
+- Focus on high-risk-zone changes.
+- Check whether the change introduced undocumented new coupling or constraints.
+
+### 4. Refactor
+- Ensure adequate test coverage before refactoring.
+- **Never mix refactor and behavior change**; commit and verify them separately.
+- After each refactoring step, verify system behavior is unchanged.
+- A refactor must not violate the invariants in `manifest.md`.
+
+---
+
+## 4. Task-end protocol (update the knowledge base at wrap-up)
+
+> **Trigger (any one)**: task done, session about to end, or the user says "wrap up".
 >
-> 收尾分两档：**「必做」是不会过期的高价值知识，别漏；「尽力」是易变状态，做不到位问题不大**——
-> 因为下一个 agent 会以真实代码为准核对。把精力优先花在「必做」上。
+> Two tiers: **"Must" is non-rotting high-value knowledge — don't skip it; "Best-effort" is volatile state —
+> imperfect is fine**, because the next agent verifies against real code anyway. Spend your effort on "Must" first.
 
-### 必做 —— 捕获不腐烂的高价值知识（本框架真正的价值所在）
+### Must — capture non-rotting, high-value knowledge (where this framework earns its keep)
 
-**1. 记录踩坑与死胡同（如果这次踩到了）→ `rules.md`**
-- 这是历史事实，发生过就永远有用，能让下一个 agent（或换模型后的你）不再踩第二次
-- 补充新的铁律 / 死胡同 / 反查表条目，并同步顶部索引区
-- 尤其是平台/环境底层的坑（如 Windows 底层行为），务必记下
+**1. Record pitfalls & dead ends (if you hit one) → `rules.md`**
+- These are historical facts, forever useful; they stop the next agent (or future you on another model) from re-stepping.
+- Add the new iron rule / dead end / lookup-table entry, and sync the top index.
+- Especially platform/environment-level pitfalls — write them down.
 
-**2. 记录重大决策根因（如果这次做了）→ `decisions.md`**
-- 「为什么这么选、否决了什么」——新增 `§`，目录区补一行摘要
+**2. Record major decision root causes (if you made one) → `decisions.md`**
+- "Why this, what was rejected" — add a `§`, add a one-line summary to the ToC.
 
-### 尽力 —— 更新易变的现状路标 → `memory.md`
+### Best-effort — update the volatile current-state lead → `memory.md`
 
-**3. 覆盖更新 `§0` 短快照**
-- 反映最新状态和下一步计划，只写路标不堆细节；写不全没关系，别写错方向即可
+**3. Overwrite `§0` snapshot**
+- Reflect the latest state and next step; write signposts, not detail. Incomplete is OK; just don't point the wrong way.
 
-**4. 执行老化迁移**
-- `§0A` 滚动窗口超过 3 个会话时，把最老的一个整段迁移入 `history.md`，不留副本
+**4. Age-out migration**
+- When `§0A` exceeds 3 sessions, migrate the oldest one wholesale into `history.md`, no copy left behind.
 
-### 通用约束
+### General constraints
 
-**5. 单一真相源**：每个事实只落一处——身份→`manifest.md`，硬规则→`rules.md`，根因→`decisions.md`，现状→`memory.md`，历史→`history.md`。他处引用只放一行指针。
+**5. Single source of truth**: each fact lives in exactly one place — identity → `manifest.md`, hard rules → `rules.md`, root cause → `decisions.md`, current state → `memory.md`, history → `history.md`. Elsewhere, put a one-line pointer only.
 
-**6. 短行、无大段代码**：文档维护用多行短 bullet，禁止数千字符单行，严禁粘贴大段代码。
+**6. Short lines, no code dumps**: maintain docs as multi-line short bullets; no multi-thousand-char single lines; never paste large code blocks.
 
-> **知识库会随开发慢慢变脏、变过期——这是正常的。** 不指望每次会话都维护得完美；
-> 定期由用户触发一次「园丁整理」集中修剪即可，见 `.xpc/garden.md`。
+> **The knowledge base will get messy and stale as development proceeds — that's normal.** Don't expect every session
+> to maintain it perfectly; a periodic, user-triggered "gardening" pass handles the cleanup — see `.xpc/garden.md`.
 
 ---
 
-## 五、协作原则（核心精神）
+## 5. Collaboration principles (the core spirit)
 
-- 诊断优先于修改
-- 高危区一次只改一个变量
-- 改完自己跑验证、跑不了的链路诚实标注「未验证」
-- 已验证的笨方法优于未验证的聪明方法
-- 多次修同一处仍失败 = 死胡同信号，果断回退
-- 可调参数提为命名常量
-- **不确定就问，不要假设**
-- 所有行为必须与 `manifest.md` 中的项目使命对齐
+- Diagnose before modifying.
+- One variable at a time in high-risk zones.
+- Run your own verification after changes; honestly label paths you couldn't run as "unverified".
+- A verified dumb approach beats an unverified clever one.
+- Repeated edits to the same spot that keep failing = dead-end signal; roll back decisively.
+- Extract tunable parameters into named constants.
+- **If unsure, ask — don't assume.**
+- All behavior must align with the project mission in `manifest.md`.

@@ -1,31 +1,33 @@
-# 示例：notch 的 XPC 知识库（worked example）
+# Example: notch's XPC knowledge base (worked example)
 
-> **这是一个虚构项目的 XPC 知识库示例，用来展示「填满后」的 XPC 长什么样。**
-> `notch` 是一个假想的跨平台命令行速记工具（Node.js + TypeScript）。这里**没有真实源代码**——
-> 示例的重点是 `.xpc/` 知识层：看它如何把跨平台开发中的踩坑、决策、铁律沉淀下来，
-> 让任意 AI agent 冷启动后不再重复踩坑。
+> **This is the XPC knowledge base of a fictional project, to show what XPC looks like "filled in".**
+> `notch` is an imaginary cross-platform CLI quick-note tool (Node.js + TypeScript). There's **no real source
+> code** here — the point is the `.xpc/` knowledge layer: how cross-platform pitfalls, decisions, and iron rules
+> get captured so any AI agent, after a cold start, stops re-stepping them.
 
-## 为什么要看这个
+## Why look at this
 
-XPC 的模板本身是**空骨架**——规则从真实踩坑中生长，不预先编造。空骨架第一眼很难想象「用起来是什么样」。
-本示例就是那个「用起来的样子」：一个迭代了若干会话、积累了真实经验的项目知识库。
+The XPC template ships as an **empty skeleton** — rules grow from real pitfalls, nothing pre-fabricated. An empty
+skeleton is hard to picture "in use". This example is that "in use" state: a knowledge base from a project that's
+been iterated over several sessions and accumulated real experience.
 
-**建议按这个顺序读，感受价值：**
+**Read in this order to feel the value:**
 
-1. **`.xpc/rules.md`** —— 皇冠明珠。看那张 `症状 → 铁律` 反查表：
-   「Windows 上偶发 EPERM rename」「换机器后 git 里路径失配」「中文在 Windows 终端乱码」——
-   这些都是跨平台 CLI 的经典深坑。**有了这张表，下一个 agent（或换模型后的你）不会再踩第二次。**
-2. **`.xpc/decisions.md`** —— 每个「为什么这么选」都带证据和被否决的备选（chokidar vs fs.watch、原子写 vs 文件锁）。
-3. **`.xpc/manifest.md`** —— 项目宪法：使命、技术栈、架构不变量、高危区。冷启动第一站。
-4. **`.xpc/memory.md`** —— 现状快照（§0 只有 4 条 bullet）+ 最近会话详记（§0A 滚动窗口 ≤3）。
-5. **`AGENTS.md` / `CLAUDE.md`** —— 烘焙后的平台入口，薄薄一层引路。
+1. **`.xpc/rules.md`** — the crown jewel. Look at the `symptom → rule` lookup table:
+   "Sporadic EPERM rename on Windows", "notes mismatch after cloning on another machine", "non-ASCII mojibake in the
+   Windows terminal" — classic deep pitfalls of a cross-platform CLI. **With this table, the next agent (or future
+   you on another model) never re-steps them.**
+2. **`.xpc/decisions.md`** — each "why this choice" comes with evidence and rejected alternatives (chokidar vs fs.watch, atomic write vs file lock).
+3. **`.xpc/manifest.md`** — the project constitution: mission, stack, architecture invariants, high-risk zones. First stop on cold start.
+4. **`.xpc/memory.md`** — current-state snapshot (§0 = 4 bullets) + recent session details (§0A rolling window ≤3).
+5. **`AGENTS.md` / `CLAUDE.md`** — the baked platform entries, a thin routing layer.
 
-## 注意信任级别
+## Note the trust levels
 
-示例里每个文件顶部都标了**信任级别**，这是 XPC 的核心姿态：
+Every file here carries a **trust level** at the top — XPC's core stance:
 
-- `manifest` / `rules` / `decisions` = **高可信**（踩坑是历史事实，几乎不腐烂——最值钱）
-- `memory.md §0` = **低可信**（现状易过期，只作方向线索，用前须核对源码）
+- `manifest` / `rules` / `decisions` = **high** (pitfalls are historical fact, barely rot — most valuable)
+- `memory.md §0` = **low** (current state goes stale; a directional lead only, verify against source before trusting)
 
-> 这就是 XPC：**首要给参考、次要给约束**。它帮 AI 少踩坑、干活更靠谱、省 token——
-> 但它假设有人当园丁定期修剪（见根目录 `templates/.xpc/garden.md`），不自维护。
+> That's XPC: **reference-first, constraint-second.** It helps the AI avoid pitfalls, work more reliably, and save
+> tokens — but it assumes a human gardener prunes it periodically (see the framework's `.xpc/garden.md`); it does not self-maintain.

@@ -1,41 +1,41 @@
-# 现状快照与最近会话 (memory.md)
+# Current-State Snapshot & Recent Sessions (memory.md)
 
-> **信任级别：低（易过期）。** 本文件是「方向线索」，不是「真相」。
-> 冷启动时用它快速定位「项目大概在做什么、下一步是什么」；
-> 但涉及具体代码、命令、状态前，**必须去源码 / 实际环境核对后再信**。
-> 若本文件与真实代码冲突，以代码为准，并在收尾时顺手更正本文件。
+> **Trust level: Low (goes stale).** This file is a *directional lead*, not the truth. On cold start, use it to
+> quickly locate "roughly what the project is doing and what's next"; but before touching specific code, commands,
+> or state, **verify against source / the actual environment first**. On conflict, the code wins — fix this file at wrap-up.
 
-> **维护纪律（尽力而为，不必完美）**：
-> 1. 每次会话结束前尽量更新 §0——它只是给下一轮对话的路标，不是交付物。
-> 2. §0 是**覆盖更新**的短快照，只写「当前状态 + 下一步」，不堆细节。
-> 3. 🚨 **§0 红线：绝不在 §0 累积「每会话一句话」的历史流水。** §0 永远只有下面那 4 条 bullet，
->    旧内容被新内容覆盖、不叠加。想记「这次做了什么」→ 写 §0A（滚动窗口 ≤3），老化后迁 `history.md`。
->    （这条红线来自真实教训：§0 若允许累积续N流水，几十个会话后会膨胀到几万字、拖慢每次冷启动、且悄悄过期。）
-> 4. §0A 保持滚动窗口 ≤ 3 个会话；写第 4 个时，把最老的整段迁移到 `history.md`。
-> 5. 单一真相源：项目身份 → `manifest.md`，踩坑/铁律 → `rules.md`，决策 → `decisions.md`。本文件只回答「现在到哪了」。
-
----
-
-## §0 当前状态 (覆盖更新)
-> 只有下面 4 条 bullet，覆盖更新、不累积历史流水（见维护纪律红线）。
-- **项目状态**：[一句话描述当前处于什么开发阶段]
-- **最新进展**：[最近完成的核心事项]
-- **待办/下一步**：[接下来的首要任务]
-- **已知问题**：[当前未解决或暂缓处理的 Bug/问题，没有就写“暂无”]
+> **Maintenance discipline (best-effort, need not be perfect)**:
+> 1. Try to update §0 before each session ends — it's a signpost for the next conversation, not a deliverable.
+> 2. §0 is an **overwrite** short snapshot: only "current state + next step", no detail pile-up.
+> 3. 🚨 **§0 red line: never accumulate a per-session changelog in §0.** §0 always has only the 4 bullets below,
+>    overwritten (not appended). To record "what was done this time" → write §0A (rolling window ≤3), age out to `history.md`.
+>    (This red line comes from a real lesson: if §0 is allowed to accumulate a session log, after dozens of sessions
+>    it balloons to tens of thousands of chars, slows every cold start, and silently goes stale.)
+> 4. Keep §0A a rolling window of ≤ 3 sessions; when writing the 4th, migrate the oldest wholesale to `history.md`.
+> 5. Single source of truth: project identity → `manifest.md`, pitfalls/iron-rules → `rules.md`, decisions → `decisions.md`. This file only answers "where are we now".
 
 ---
 
-## §0A 最近会话详记 (滚动窗口 ≤ 3)
-*每个会话用 `###` 分隔，使用多行短 bullet 记录关键过程和结论。*
-
-### 会话 [YYYY-MM-DD HH:MM] - [简短主题]
-- [要点1]
-- [要点2]
+## §0 Current State (overwrite)
+> Only the 4 bullets below; overwrite, never accumulate a history log (see the red line).
+- **Project status**: [one line on what development stage we're at]
+- **Latest progress**: [the core thing recently completed]
+- **Todo / next step**: [the top task coming up]
+- **Known issues**: [current unresolved / deferred bugs; write "none" if none]
 
 ---
 
-## 参考指针（本文件不重复维护以下内容）
-- 项目身份 / 技术栈 / 项目结构 / 常用命令 → `manifest.md`（高可信）
-- 硬规则与死胡同 → `rules.md`（高可信，历史事实）
-- 决策根因 → `decisions.md`（高可信，附证据）
-- 历史会话归档 → `history.md`
+## §0A Recent Session Details (rolling window ≤ 3)
+*Separate each session with `###`; use multi-line short bullets for key steps and conclusions.*
+
+### Session [YYYY-MM-DD HH:MM] - [short topic]
+- [point 1]
+- [point 2]
+
+---
+
+## Pointers (this file does not duplicate the following)
+- Project identity / stack / structure / commands → `manifest.md` (high trust)
+- Hard rules & dead ends → `rules.md` (high trust, historical fact)
+- Decision root causes → `decisions.md` (high trust, with evidence)
+- Archived sessions → `history.md`

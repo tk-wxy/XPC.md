@@ -1,53 +1,56 @@
-# 铁律、死胡同与反查表 (rules.md)
+# Iron Rules, Dead Ends & Lookup Table (rules.md)
 
-> **信任级别：高（历史事实）。** 这里记录的是真实踩过的坑与验证失败的路线——
-> **发生过就为真**，是本知识库最不会过期、最值钱的部分。动手前优先查这里，避免重复踩坑。
+> **Trust level: High (historical fact).** This records real pitfalls hit and technical routes proven to fail —
+> **it happened, so it's true**, the least-rotting and most valuable part of this knowledge base. Check here
+> first before acting, to avoid re-stepping the same pit.
 >
-> **失效条目不要删。** 技术栈 / 依赖升级后，个别死胡同可能已不成立。此时用删除线标注，
-> 保留历史避免有人再试：`~~原路线 → 原因~~ (已失效 YYYY-MM，因为……)`。
+> **Don't delete invalidated entries.** After a stack/dependency upgrade, a dead end may no longer hold. Mark it
+> with strikethrough, keeping the history so no one retries it:
+> `~~original route → reason~~ (invalidated YYYY-MM, because …)`.
 >
-> **说明**：这是 {{PROJECT_NAME}} 项目的硬约束规则集。违反铁律通常导致连锁 bug 或架构崩塌。在开发过程中应严格遵守。
+> **Note**: this is {{PROJECT_NAME}}'s set of hard constraints. Violating an iron rule typically causes cascading
+> bugs or architectural collapse. Follow them strictly during development.
 
 ---
 
-## 索引区（冷启动只读本区）
+## Index (cold start reads only this section)
 
-*每条一行：编号 | 一句话摘要 | 所属分节 | 是否高危。新增/修改/删除规则时必须同步更新本区。*
+*One line each: id | one-line summary | section | high-risk. Sync this table whenever you add/change/remove a rule.*
 
-| 编号 | 摘要 | 分节 | 高危 |
-|------|------|------|------|
-| 规则1 | [一句话摘要] | 核心架构 | [是/否] |
+| ID | Summary | Section | High-risk |
+|----|---------|---------|-----------|
+| R1 | [one-line summary] | Core architecture | [yes/no] |
 
-> **读取规则**：冷启动和会话开始时只扫本表 + 死胡同列表；
-> 只有任务涉及某分节（或某条标记为高危）时，才读该分节全文。
-
----
-
-## 铁律 (Iron Rules)
-*按子系统或模块分节。每条规则格式：[动作] + [一行原因] + [DECISIONS §指针]*
-
-### 核心架构 / 全局
-- [ ] 规则1：[做什么 / 别做什么] - [一行原因] - 详见 decisions.md §[编号]
-- [ ] 规则2：
-
-### {{HIGH_RISK_AREAS}} (高危区)
-- [ ] 规则3：
-
-*(提示：以上为骨架，请根据真实踩坑经验不断补充完善。每次增删规则，同步更新顶部索引区。)*
+> **Reading rule**: on cold start / session start, scan only this table + the dead-ends list; read a section in
+> full only when the task touches it (or it's flagged high-risk).
 
 ---
 
-## 死胡同 (Dead Ends)
-*已验证失败的技术路线。避免重蹈覆辙。格式：路线 → 失败原因 → 验证日期*
-*失效后不删，改用删除线：`~~路线 → 原因 → 日期~~ (已失效 YYYY-MM)`*
+## Iron Rules
+*Grouped by subsystem/module. Format per rule: [do / don't] + [one-line reason] + [DECISIONS § pointer]*
 
-- [路线描述] → [失败原因] → [YYYY-MM-DD]
-- 
+### Core architecture / global
+- [ ] R1: [do what / don't do what] - [one-line reason] - see decisions.md §[id]
+- [ ] R2:
+
+### {{HIGH_RISK_AREAS}} (high-risk zone)
+- [ ] R3:
+
+*(Hint: the above is a skeleton — grow it from real pitfalls. Sync the top index on every add/change.)*
 
 ---
 
-## 反查表 (Troubleshooting)
-*遇到症状时，先查哪条铁律。格式：症状描述 → 对应铁律编号*
+## Dead Ends
+*Technical routes proven to fail. Avoid repeating them. Format: route → failure reason → date verified.*
+*When invalidated, don't delete — use strikethrough: `~~route → reason → date~~ (invalidated YYYY-MM)`*
 
-- [症状描述] → 检查 规则[编号]
-- 
+- [route description] → [failure reason] → [YYYY-MM-DD]
+-
+
+---
+
+## Lookup Table (Troubleshooting)
+*Given a symptom, which iron rule to check first. Format: symptom → rule id.*
+
+- [symptom description] → check R[id]
+-

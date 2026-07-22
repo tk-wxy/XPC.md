@@ -1,10 +1,10 @@
-# 历史归档 (history.md)
+# History Archive (history.md)
 
-> **说明**：本文件为 `memory.md` §0A 中老化条目（超出滚动窗口）的归档区。
-> 默认**不读**，仅在需要考古时通过 `grep` 搜索。按时间倒序排列。
+> **Note**: this file archives aged-out entries from `memory.md` §0A (beyond the rolling window).
+> **Not read by default** — grep it only when you need forensics. Ordered newest-first.
 
-## [YYYY年MM月]
+## [YYYY-MM]
 
-### 会话 [YYYY-MM-DD HH:MM] - [简短主题]
-- [归档的要点1]
-- [归档的要点2]
+### Session [YYYY-MM-DD HH:MM] - [short topic]
+- [archived point 1]
+- [archived point 2]
