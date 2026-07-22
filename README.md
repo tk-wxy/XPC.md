@@ -8,10 +8,15 @@ intent, hard-won pitfalls, and decisions so any agent picks up where the last on
 
 ## Use it in one sentence
 
+Clone the framework so its files land **at your project root** (the trailing `.` avoids a wrapper folder):
+
 ```bash
-git clone https://github.com/tk-wxy/XPC.md.git my-project
-cd my-project && rm -rf .git && git init
+mkdir my-project && cd my-project
+git clone https://github.com/tk-wxy/XPC.md.git .   # note the "." — clone into here, no wrapper
+rm -rf .git && git init                            # make it your own repo
 ```
+
+> ⚠️ `CLAUDE.md` / `AGENTS.md` / `.xpc/` must sit at your project **root** — the only place an agent auto-reads. If they land in a subfolder, XPC silently does nothing.
 
 Then tell your agent:
 

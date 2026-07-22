@@ -7,10 +7,15 @@ XPC 用几个 Markdown 文件解决它——不装工具、不跑命令。把项
 
 ## 一句话上手
 
+clone 时让文件**直接落进项目根目录**（末尾的 `.` 是关键，避免套外层文件夹）：
+
 ```bash
-git clone https://github.com/tk-wxy/XPC.md.git my-project
-cd my-project && rm -rf .git && git init
+mkdir my-project && cd my-project
+git clone https://github.com/tk-wxy/XPC.md.git .   # 注意末尾的 "."：clone 进当前目录，不套文件夹
+rm -rf .git && git init                            # 换成你自己的仓库
 ```
+
+> ⚠️ `CLAUDE.md` / `AGENTS.md` / `.xpc/` 必须在项目**根目录**——那是 agent 唯一自动读取的位置。落进子文件夹，XPC 会静默失效、什么都不做。
 
 然后对你的 agent 说：
 
