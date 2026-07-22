@@ -1,5 +1,5 @@
 <project>
-{{PROJECT_NAME}} — {{PROJECT_DESCRIPTION}}
+Project identity, stack & invariants live in .xpc/manifest.md — read it first.
 </project>
 
 <pointer>
@@ -7,7 +7,7 @@ This file just routes. The single source of truth for all dev flow, protocol, an
 </pointer>
 
 <init>
-If this project is not yet initialized (.xpc/manifest.md still contains {{placeholders}} or is still a template) and the user asks to initialize (e.g. "please initialize") → run the initialization protocol in .xpc/init.md; otherwise ignore this section.
+If .xpc/manifest.md is still the unfilled template (its fields are still placeholder tokens) and the user asks to initialize (e.g. "please initialize") → run the initialization protocol in .xpc/init.md; otherwise ignore this section.
 </init>
 
 <startup>

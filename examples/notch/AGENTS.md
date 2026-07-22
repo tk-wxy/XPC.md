@@ -1,8 +1,12 @@
-# notch
+# Agent entry
 
-> A cross-platform CLI quick-note tool: one command appends a timestamped thought to a local git repo; `watch` mode auto-syncs.
+> Project identity, stack & invariants live in `.xpc/manifest.md` — read it first.
 
 **This file just routes. The single source of truth for all dev flow, protocol, and conventions is `.xpc/workflow.md` — follow it strictly.**
+
+## Initialization Bootstrap (only when not yet initialized)
+
+If `.xpc/manifest.md` is still the unfilled template (its fields are still placeholder tokens) and the user asks to initialize (e.g. "please initialize") → run the initialization protocol in `.xpc/init.md`; otherwise ignore this section.
 
 ## Startup Protocol
 
@@ -17,5 +21,5 @@ Trigger: task done, session end, or the user says "wrap up". Prioritize recordin
 ## Core Principles (full version in workflow.md §5)
 
 - Diagnose before modifying; if unsure, ask, don't assume
-- High-risk zones (`store.ts` atomic write / `sync.ts` git concurrency / `paths.ts` cross-platform paths): one variable at a time
+- One variable at a time in high-risk zones; repeated failure at the same spot = dead-end signal, roll back
 - All behavior must align with `.xpc/manifest.md`

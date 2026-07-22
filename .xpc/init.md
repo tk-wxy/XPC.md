@@ -8,8 +8,9 @@
 > **This file may be deleted afterward** (see §4).
 
 > 🌐 **Work in the user's language.** Conduct the initialization dialogue **in the language the user speaks**,
-> and bake the knowledge base (manifest / memory / rules / …) in **that same language**. The template ships in
-> English as the canonical source, but the project you produce should match the user's language.
+> and bake the knowledge base (manifest / memory / rules / …) in **that same language**. Translate the section
+> **headers and boilerplate too — not just the content** — so the result reads as one language, not a mix. The
+> template ships in English as the canonical source, but the project you produce should match the user's language.
 
 ---
 
@@ -17,6 +18,10 @@
 
 In a freshly cloned project, the user says something like "**My project is …, please initialize**". You (the AI),
 having read the entry file's *Initialization Bootstrap* pointer, run this protocol.
+
+> **Read efficiency**: for init you only need **this file** + a quick glance at the `.xpc/` skeletons (manifest /
+> memory / rules / decisions). You do **not** need to read `workflow.md`, `history.md`, or `garden.md` in full yet —
+> those are for the development phase.
 
 ## 1. Understand the project (ask when unsure; don't assume)
 
@@ -38,7 +43,8 @@ Also determine the project type:
 ## 2. Bake the knowledge base
 
 1. **`.xpc/manifest.md` (project constitution, most important)**: fill in mission, stack, architecture invariants, high-risk zones, project structure, common commands.
-2. **Entry files** (CLAUDE.md / AGENTS.md / your platform's entry): replace all `{{placeholders}}` with real project info; you may tune the wording to your own strengths.
+2. **Entry files** (CLAUDE.md / AGENTS.md / …): **no editing needed.** They are generic routing files and carry no
+   project identity — that lives only in `manifest.md` (single source of truth). Leave them as-is.
 3. **`.xpc/memory.md`**: write the current-state snapshot in §0 (**4 bullets only**, obey the red line); record this init session in §0A.
 4. **`.xpc/rules.md` / `.xpc/decisions.md`**: keep as empty skeletons; seed the first entry **only** if you find real evidence — **never fabricate**. Better an empty skeleton than fake experience.
 

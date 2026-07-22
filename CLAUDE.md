@@ -1,13 +1,13 @@
-# {{PROJECT_NAME}} — Claude Code entry
+# Claude Code entry
 
-> {{PROJECT_DESCRIPTION}}
+> Project identity, stack & invariants live in `.xpc/manifest.md` — read it first.
 > Claude Code reads CLAUDE.md recursively from subdirectories; deeper files take priority.
 
 **This file just routes. The single source of truth for all dev flow, protocol, and conventions is `.xpc/workflow.md` — follow it strictly.**
 
 ## Initialization Bootstrap (only when not yet initialized)
 
-If this project is not yet initialized (`.xpc/manifest.md` still contains `{{placeholders}}` or is still a template) and the user asks to initialize (e.g. "please initialize") → run the initialization protocol in `.xpc/init.md`; otherwise ignore this section.
+If `.xpc/manifest.md` is still the unfilled template (its fields are still placeholder tokens) and the user asks to initialize (e.g. "please initialize") → run the initialization protocol in `.xpc/init.md`; otherwise ignore this section.
 
 ## Startup Protocol
 
